@@ -60,7 +60,6 @@
         :else (throw (ex-info (str "Invalid defspec options: " (pr-str options))
                               {:bad-options options}))))
 
-#?(:clj
 (defmacro defspec
   "Defines a new clojure.test test var that uses `quick-check` to verify the
   property, running num-times trials by default.  You can call the function defined as `name`
@@ -83,7 +82,7 @@
             tc/quick-check
             times#
             (vary-meta ~property assoc :name (str '~property))
-            (apply concat options#))))))))
+            (apply concat options#)))))))
 
 (def ^:dynamic *report-trials*
   "Controls whether property trials should be reported via clojure.test/report.
@@ -156,14 +155,14 @@
     (when (== so-far total) (println))))
 
 (defmethod ct/report #?(:clj ::trial :cljs [::ct/default ::trial]) [m]
-  (when-let [trial-report-fn (and *report-trials*
-                                  (if (true? *report-trials*)
+  (when-let [trial-report-fn (and clojure.test.check.clojure-test/*report-trials*
+                                  (if (true? clojure.test.check.clojure-test/*report-trials*)
                                     trial-report-dots
-                                    *report-trials*))]
+                                    clojure.test.check.clojure-test/*report-trials*))]
     (trial-report-fn m)))
 
 (defmethod ct/report #?(:clj ::shrinking :cljs [::ct/default ::shrinking]) [m]
-  (when *report-shrinking*
+  (when clojure.test.check.clojure-test/*report-shrinking*
     (with-test-out*
       (fn []
         (println "Shrinking" (get-property-name m)

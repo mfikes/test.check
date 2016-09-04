@@ -72,10 +72,9 @@
           read-string
           (select-keys [:test-var :result :num-tests])
           (= {:test-var "trial-counts", :result true, :num-tests 5000})))
-
   (binding [ct/*report-trials* true]
     (let [output (capture-test-var #'trial-counts)]
-      (is (re-matches #?(:clj  #"(?s)\.{5}.+"
+      (is (re-matches #?(:clj  (java.util.regex.Pattern/compile "(?s)\\.{5}.+")
                          :cljs #"\.{5}[\s\S]+")
                       output))))
 
@@ -118,7 +117,7 @@
     (is (== 1 (:fail report-counters)))
     (is (re-seq
          #?(:clj
-            #"(?s)Shrinking vector-elements-are-unique starting with parameters \[\[.+"
+            (java.util.regex.Pattern/compile "(?s)Shrinking vector-elements-are-unique starting with parameters \\[\\[.+")
 
             :cljs
             #"Shrinking vector-elements-are-unique starting with parameters \[\[[\s\S]+")
