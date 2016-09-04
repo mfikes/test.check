@@ -11,7 +11,8 @@
                                   [org.clojure/clojurescript "1.7.48"]]}
              :self-host {:dependencies [[org.clojure/clojure "1.8.0"]
                                         [org.clojure/clojurescript "1.9.227"]]
-                         :main clojure.main}}
+                         :main clojure.main
+                         :global-vars {*warn-on-reflection* false}}}
   :global-vars {*warn-on-reflection* true}
   :plugins [[lein-codox "0.9.1"]
             [lein-cljsbuild "1.1.0"]]
