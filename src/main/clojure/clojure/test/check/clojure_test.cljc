@@ -29,19 +29,19 @@
   [{:keys [type] :as args}]
   (case type
     :trial
-    (ct/report {:type ::trial
-                ::property (:property args)
-                ::trial [(:so-far args) (:num-tests args)]})
+    (ct/report {:type :clojure.test.check.clojure-test/trial
+                :clojure.test.check.clojure-test/property (:property args)
+                :clojure.test.check.clojure-test/trial [(:so-far args) (:num-tests args)]})
 
     :failure
-    (ct/report {:type ::shrinking
-                ::property (:property args)
-                ::params (vec (:failing-args args))})
+    (ct/report {:type :clojure.test.check.clojure-test/shrinking
+                :clojure.test.check.clojure-test/property (:property args)
+                :clojure.test.check.clojure-test/params (vec (:failing-args args))})
 
     :shrunk
-    (ct/report {:type ::shrunk
-                ::property (:property args)
-                ::params (-> args :shrunk :smallest vec)})
+    (ct/report {:type :clojure.test.check.clojure-test/shrunk
+                :clojure.test.check.clojure-test/property (:property args)
+                :clojure.test.check.clojure-test/params (-> args :shrunk :smallest vec)})
     nil))
 
 (def ^:dynamic *default-opts*
