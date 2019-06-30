@@ -5,6 +5,7 @@
   {:main       'clojure.test.check.test.runner
    :output-to  "target/out-self-host/main.js"
    :output-dir "target/out-self-host"
+   :cache-analysis-format :edn
    :target     :nodejs})
 
 (defn copy-source
